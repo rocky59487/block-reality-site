@@ -3,7 +3,7 @@
 The development site for [Block Reality](https://github.com/rocky59487/block-reality),
 a Minecraft Forge mod that runs real finite element analysis on structures you build.
 
-**Live:** TODO — GitHub Pages URL goes here once Pages is enabled.
+**Live:** <https://rocky59487.github.io/block-reality-site/>
 
 Built from scratch with plain HTML and CSS, no framework. This is also where the
 devlogs live.
