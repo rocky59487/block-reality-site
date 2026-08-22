@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-  ============================================================
-  Block Reality — 專案網站
-  ============================================================
--->
 <html lang="en">
 
 <head>
@@ -23,18 +18,18 @@
     <h1>Block Reality</h1>
     <p class="tagline">Real structural engineering, inside Minecraft.</p>
 
-    <nav>
-      <a href="#about">What it is</a>
-      <a href="#model">How it works</a>
-      <a href="#devlog">Devlog</a>
+    <nav aria-label="Main navigation">
+      <a href="index.html" class="active" aria-current="page">Home</a>
+      <a href="devlog.html">Devlog</a>
+      <a href="https://github.com/rocky59487/block-reality" target="_blank" rel="noopener noreferrer">GitHub</a>
     </nav>
   </header>
 
   <main>
 
-    <!-- ========== 區塊 1：這是什麼 ========== -->
-    <section id="about">
-      <h2>What it is</h2>
+    <!-- ========== hero ========== -->
+    <section id="hero">
+      <h2>Real structural engineering, inside Minecraft</h2>
 
       <p>
         In vanilla Minecraft, gravity stops at sand and gravel. <strong>Block Reality</strong> brings real-world
@@ -51,9 +46,14 @@
         <figcaption>The utilisation lens: color gradients visualize demand-to-capacity ratios (blue = safe, red =
           critical overload).</figcaption>
       </figure>
+      <div class="cta-group">
+        <a href="devlog.html" class="btn btn-primary mc-btn">Read Devlogs</a>
+        <a href="https://github.com/rocky59487/block-reality" target="_blank" rel="noopener noreferrer"
+          class="btn btn-secondary mc-btn">GitHub Repository</a>
+      </div>
     </section>
 
-    <!-- ========== 區塊 2：力學模型 ========== -->
+    <!-- ========== fea ========== -->
     <section id="model">
       <h2>How it works</h2>
 
@@ -71,36 +71,30 @@
       </ul>
     </section>
 
-    <!-- ========== 區塊 3：開發紀錄 ========== -->
-    <section id="devlog">
-      <h2>Devlog</h2>
-
+    <!-- ========== devlog snapshot ========== -->
+    <section id="latest-devlog">
+      <div class="section-header-inline">
+        <h2>Latest Devlog</h2>
+        <a href="devlog.html" class="view-all-link">Read All Devlogs</a>
+      </div>
       <details class="devlog-card" open>
         <summary class="devlog-header">
           <div class="devlog-title-group">
-            <h3>Devlog #1: Background Sparse Solver &amp; Utilisation Lens</h3>
-            <time datetime="2026-08-15">2026-08-15</time>
+            <h3>Devlog #1: First Steps into Web Development</h3>
+            <time datetime="2026-08-21">2026-08-21</time>
           </div>
-          <span class="toggle-icon" aria-hidden="true">▼</span>
+          <span class="toggle-icon">▶</span>
         </summary>
-
         <div class="devlog-content">
           <p>
-            Running full finite element stiffness assembly on every block place or break could easily freeze the Minecraft
-            20 TPS tick loop. We moved the sparse linear solver into asynchronous worker threads, updating stress states
-            off-tick and streaming utilization buffers directly into custom rendering shaders.
+            Today marks my official start in programming. I kicked things off with the Mimo app to get a feel for basic
+            syntax
           </p>
-
-          <figure class="devlog-figure">
-            <img src="img/section-view.jpg" alt="Stress analysis sectional cut through a concrete beam structure">
-            <figcaption>Figure 1.1: Section view visualizing member demand-to-capacity distribution calculated off-tick.</figcaption>
-          </figure>
+          <a href="devlog.html" class="read-more-link">Go to Devlog page for full screenshots →</a>
         </div>
       </details>
     </section>
-
   </main>
-
   <footer>
     <p>
       <a href="https://github.com/rocky59487/block-reality" target="_blank" rel="noopener noreferrer">GitHub
@@ -109,9 +103,9 @@
         Source</a>
       <a href="https://rocky59487.github.io/block-reality-site/" target="_blank" rel="noopener noreferrer">Live Site</a>
     </p>
-    <p>&copy; 2026 Block Reality Project. Built with plain HTML & CSS.</p>
+    <p>&copy; 2026 Block Reality Project. Built with plain HTML &amp; CSS.</p>
   </footer>
-
+  <script src="main.js"></script>
 </body>
 
 </html>
