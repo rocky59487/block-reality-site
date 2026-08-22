@@ -127,15 +127,40 @@ nav a:hover {
   transform: translateY(-2px);
 }
 
-/* ---------- Devlog 卡片 ---------- */
+/* ---------- Devlog 縫線復古手帳卡片 ---------- */
 article {
   background: bisque;
-  border: 1px solid var(--line);
+  color: #2c1f14;
+  border: 1px solid #d4a373;
+  outline: 2px dashed #8c5828;
+  outline-offset: -6px;
   border-radius: 8px;
-  padding: 1.25rem 1.5rem;
-  margin-block: 1.5rem;
-  transition: border-color 0.2s ease;
+  padding: 1.5rem 1.75rem;
+  margin-block: 1.75rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
 }
+
+article h3 {
+  color: #1a120b;
+  font-family: "Georgia", serif;
+  margin-top: 0;
+  margin-bottom: 0.35rem;
+}
+
+article time {
+  display: inline-block;
+  color: #8c5828;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+article p {
+  color: #3b2c20;
+  line-height: 1.65;
+  margin: 0;
+}
+
 
 /* ---------- 圖片與圖說 ---------- */
 figure {
