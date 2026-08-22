@@ -1,4 +1,9 @@
 * text=auto eol=lf
+*.bat text eol=crlf
+*.cmd text eol=crlf
 *.jpg binary
 *.png binary
 *.gif binary
+*.jar binary
+*.exe binary
+install/br-sidecar binary

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Install — Block Reality</title>
+  <meta name="description"
+    content="How to install Block Reality: the Forge mod and the br-sidecar analysis engine, for Minecraft 1.20.1.">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- ========== 頁首與導覽 ========== -->
+  <header class="site-header">
+    <h1>Block Reality</h1>
+    <p class="tagline">Installation guide — Demo v0</p>
+
+    <nav aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="install.html" class="active" aria-current="page">Install</a>
+      <a href="usage.html">Usage</a>
+      <a href="devlog.html">Devlog</a>
+      <a href="https://github.com/rocky59487/block-reality" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <section id="requirements">
+      <h2>What you need</h2>
+
+      <div class="badge-group">
+        <span class="badge">Minecraft <strong>1.20.1</strong></span>
+        <span class="badge">Forge <strong>47.x</strong></span>
+        <span class="badge">Windows <strong>or</strong> Linux</span>
+      </div>
+
+      <p>
+        Any launcher works. The installer already knows where the vanilla launcher, Prism, MultiMC, Modrinth and
+        CurseForge keep their instances.
+      </p>
+
+      <div class="callout">
+        <p>
+          <strong>macOS:</strong> <code>install.sh</code> will install the mod, but this release only ships engine
+          binaries for Windows and Linux. The mod still loads and plays, analysis is just off.
+        </p>
+      </div>
+    </section>
+
+    <!-- ========== 發布包內容 ========== -->
+    <section id="contents">
+      <h2>What is in the release</h2>
+
+      <p>
+        Block Reality is two programs. The mod reads your blocks and draws the HUD. A separate process does the
+        finite element solve.
+      </p>
+
+      <table class="ref-table">
+        <thead>
+          <tr>
+            <th>File</th>
+            <th>What it is</th>
+            <th>Goes to</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>blockreality-0.1a.jar</code></td>
+            <td>the Forge mod</td>
+            <td><code>&lt;instance&gt;/mods/</code></td>
+          </tr>
+          <tr>
+            <td><code>br-sidecar.exe</code></td>
+            <td>the analysis engine, Windows</td>
+            <td><code>&lt;instance&gt;/</code></td>
+          </tr>
+          <tr>
+            <td><code>br-sidecar</code></td>
+            <td>the analysis engine, Linux</td>
+            <td><code>&lt;instance&gt;/</code></td>
+          </tr>
+          <tr>
+            <td><code>install.bat</code> / <code>install.sh</code></td>
+            <td>the installer</td>
+            <td>run in place</td>
+          </tr>
+          <tr>
+            <td><code>SHA256SUMS.txt</code></td>
+            <td>hashes of every file in the archive</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <p>
+          FrameCore is statically linked into <code>br-sidecar</code>, so there is no separate library to install.
+          Running it as its own process instead of loading it into the JVM means a crash in the C++ costs one analysis
+          instead of the server and the save.
+        </p>
+      </div>
+
+      <div class="callout callout-note">
+        <p>
+          The engine is optional. Without it the mod loads and plays normally, with analysis disabled and reported as
+          such.
+        </p>
+      </div>
+    </section>
+
+    <!-- ========== 安裝步驟 ========== -->
+    <section id="steps">
+      <h2>Install</h2>
+
+      <div class="step">
+        <div class="step-header">
+          <span class="step-number">1</span>
+          <h3>Make a Forge 1.20.1 instance</h3>
+        </div>
+        <p>
+          Skip this if you already have one. Otherwise create a new profile: Minecraft <strong>1.20.1</strong>,
+          modloader <strong>Forge</strong>, any <code>47.x</code> version.
+        </p>
+        <figure class="shot">
+          <img src="img/version.png" width="798" height="932" loading="lazy"
+            alt="CurseForge Create Profile dialog with Minecraft version 1.20.1 and modloader Forge 47.4.10 selected">
+          <figcaption>A CurseForge profile on 1.20.1 with <code>forge-47.4.10</code>. Any launcher will do, the
+            version numbers are what matter.</figcaption>
+        </figure>
+      </div>
+
+      <div class="step">
+        <div class="step-header">
+          <span class="step-number">2</span>
+          <h3>Download and extract</h3>
+        </div>
+        <p>
+          Download the archive and extract it. Extract it properly rather than running the installer from inside a zip
+          preview, because it copies the files sitting next to it.
+        </p>
+        <div class="cta-group">
+          <a href="https://github.com/rocky59487/block-reality/releases" target="_blank" rel="noopener noreferrer"
+            class="btn btn-primary mc-btn">Download from GitHub Releases</a>
+        </div>
+        <p class="fineline">
+          Mirrored here as individual files:
+          <a href="install/blockreality-0.1a.jar">blockreality-0.1a.jar</a>,
+          <a href="install/br-sidecar.exe">br-sidecar.exe</a>,
+          <a href="install/br-sidecar">br-sidecar</a>,
+          <a href="install/install.bat">install.bat</a>,
+          <a href="install/install.sh">install.sh</a>,
+          <a href="install/SHA256SUMS.txt">SHA256SUMS.txt</a>.
+        </p>
+      </div>
+
+      <div class="step">
+        <div class="step-header">
+          <span class="step-number">3</span>
+          <h3>Run the installer</h3>
+        </div>
+        <p>On Windows, double-click <code>install.bat</code>. On Linux:</p>
+        <div class="code-box"><code>./install.sh</code></div>
+
+        <p>
+          With no arguments it looks for a Minecraft instance in the usual locations. If it finds one it uses it; if it
+          finds several it lists them and asks which. You can also name the directory yourself:
+        </p>
+        <div class="code-box"><code>install.bat "D:\games\my-instance\.minecraft"</code></div>
+        <div class="code-box"><code>./install.sh ~/.minecraft</code></div>
+
+        <p>To see what it found without installing anything:</p>
+        <div class="code-box"><code>install.bat --list</code></div>
+
+        <div class="callout callout-note">
+          <p>
+            The directory it wants is the game directory, the one with <code>mods/</code> and <code>saves/</code> in
+            it. Not the launcher folder.
+          </p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-header">
+          <span class="step-number">4</span>
+          <h3>Check the two files landed</h3>
+        </div>
+        <p>
+          This is also all a manual install is. If you would rather not run a script, copy these two files yourself.
+        </p>
+
+        <p>The mod goes in <code>mods/</code>:</p>
+        <figure class="shot">
+          <img src="img/makesuremodthere.png" width="1449" height="628" loading="lazy"
+            alt="File Explorer showing blockreality-0.1a.jar inside the mods folder">
+          <figcaption><code>blockreality-0.1a.jar</code> in <code>&lt;instance&gt;/mods/</code>. It is only about 150
+            KB because the solver is not in it.</figcaption>
+        </figure>
+
+        <p>The engine goes one level up, in the instance root beside <code>mods/</code> and <code>saves/</code>:</p>
+        <figure class="shot">
+          <img src="img/makesureenginethere.png" width="1440" height="675" loading="lazy"
+            alt="File Explorer showing br-sidecar.exe in the instance root beside the mods, saves and config folders">
+          <figcaption><code>br-sidecar.exe</code> in the instance root, the same folder as <code>mods/</code> rather
+            than inside it.</figcaption>
+        </figure>
+      </div>
+
+      <div class="step">
+        <div class="step-header">
+          <span class="step-number">5</span>
+          <h3>Verify in game</h3>
+        </div>
+        <p>Launch the instance, load any world, press <kbd>T</kbd> and run:</p>
+        <div class="code-box"><code>/br status</code></div>
+
+        <figure class="shot">
+          <img src="img/usestatus.png" width="2001" height="1076" loading="lazy"
+            alt="Minecraft Forge 1.20.1 singleplayer with the command /br status typed into the chat bar">
+          <figcaption>Typing the command. Worth checking the title bar too: <em>Minecraft* Forge 1.20.1</em>.
+          </figcaption>
+        </figure>
+
+        <p>You should get back something like this:</p>
+
+        <figure class="shot">
+          <img src="img/status.png" width="2001" height="999" loading="lazy"
+            alt="In-game readout listing dimension, engine IDLE, the resolved engine path, revision, blocks and last result">
+          <figcaption>The engine was found. <code>IDLE</code> is what you want to see here.</figcaption>
+        </figure>
+
+        <ul>
+          <li><code>engine IDLE</code> — resolved and waiting. It is idle because there is nothing built yet.</li>
+          <li><code>engine:</code> — the path it resolved to. If this line is missing, <code>/br status</code> lists
+            every path it searched instead.</li>
+          <li><code>blocks 0 &nbsp;test loads: 0</code> — nothing structural in range yet.</li>
+          <li><code>last result none yet</code> — no solve has run.</li>
+        </ul>
+
+        <div class="cta-group">
+          <a href="usage.html" class="btn btn-primary mc-btn">Now build something →</a>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ========== 疑難排解 ========== -->
+    <section id="troubleshooting">
+      <h2>Troubleshooting</h2>
+
+      <details class="faq" name="faq">
+        <summary class="faq-header">
+          <h3>/br status shows no engine path</h3>
+          <span class="toggle-icon" aria-hidden="true">▼</span>
+        </summary>
+        <div class="faq-body">
+          <p>The mod looks for the engine in this order, and <code>/br status</code> prints every path it tried:</p>
+          <ol>
+            <li>the config file</li>
+            <li>the <code>-Dbr.sidecar</code> JVM argument</li>
+            <li>the <code>BR_SIDECAR</code> environment variable</li>
+            <li>the game directory</li>
+            <li><code>PATH</code></li>
+          </ol>
+          <p>
+            Usually it is the fourth one: put <code>br-sidecar.exe</code> in the game directory, next to
+            <code>mods/</code> rather than inside it.
+          </p>
+        </div>
+      </details>
+
+      <details class="faq" name="faq">
+        <summary class="faq-header">
+          <h3>The installer found no Minecraft instance</h3>
+          <span class="toggle-icon" aria-hidden="true">▼</span>
+        </summary>
+        <div class="faq-body">
+          <p>It searched these:</p>
+          <div class="code-box"><code>%APPDATA%\.minecraft<br>%APPDATA%\PrismLauncher\instances\*<br>%APPDATA%\MultiMC\instances\*<br>%APPDATA%\ModrinthApp\profiles\*<br>%USERPROFILE%\curseforge\minecraft\Instances\*</code>
+          </div>
+          <p>If yours lives somewhere else, hand it the path directly:</p>
+          <div class="code-box"><code>install.bat "D:\games\my-instance\.minecraft"</code></div>
+        </div>
+      </details>
+
+      <details class="faq" name="faq">
+        <summary class="faq-header">
+          <h3>It warns there is no br-sidecar next to the script</h3>
+          <span class="toggle-icon" aria-hidden="true">▼</span>
+        </summary>
+        <div class="faq-body">
+          <p>
+            The zip did not fully extract, or <code>install.bat</code> got moved out on its own. It copies the files
+            sitting beside it, so it needs the folder intact.
+          </p>
+          <p>Not fatal. The mod gets installed anyway and plays with analysis off.</p>
+        </div>
+      </details>
+
+      <details class="faq" name="faq">
+        <summary class="faq-header">
+          <h3>It says there is no Forge in this instance</h3>
+          <span class="toggle-icon" aria-hidden="true">▼</span>
+        </summary>
+        <div class="faq-body">
+          <p>
+            You pointed it at a vanilla instance. Block Reality needs Minecraft 1.20.1 with Forge 47.x —
+            <a href="https://files.minecraftforge.net/net/minecraftforge/index.html" target="_blank"
+              rel="noopener noreferrer">files.minecraftforge.net</a>.
+          </p>
+        </div>
+      </details>
+
+      <details class="faq" name="faq">
+        <summary class="faq-header">
+          <h3>Checking the download is intact</h3>
+          <span class="toggle-icon" aria-hidden="true">▼</span>
+        </summary>
+        <div class="faq-body">
+          <p><code>SHA256SUMS.txt</code> has a hash for every file in the archive. To check them all at once:</p>
+          <div class="code-box"><code>sha256sum -c SHA256SUMS.txt</code></div>
+          <p>Or on Windows, one file at a time:</p>
+          <div class="code-box"><code>certutil -hashfile br-sidecar.exe SHA256</code></div>
+        </div>
+      </details>
+    </section>
+
+  </main>
+
+  <!-- ========== 頁尾 ========== -->
+  <footer>
+    <p>
+      <a href="https://github.com/rocky59487/block-reality" target="_blank" rel="noopener noreferrer">GitHub
+        Repository</a>
+      <a href="https://github.com/rocky59487/block-reality-site" target="_blank" rel="noopener noreferrer">Site
+        Source</a>
+      <a href="https://rocky59487.github.io/block-reality-site/" target="_blank" rel="noopener noreferrer">Live Site</a>
+    </p>
+    <p>&copy; 2026 Block Reality Project. Built with plain HTML &amp; CSS.</p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+
+</html>

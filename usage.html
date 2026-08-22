@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Usage — Block Reality</title>
+  <meta name="description"
+    content="How to play Block Reality: the blocks, the Stress Glasses, the three lenses, reading the HUD, and the command reference.">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- ========== 頁首與導覽 ========== -->
+  <header class="site-header">
+    <h1>Block Reality</h1>
+    <p class="tagline">Usage guide — building, loading, and reading the result</p>
+
+    <nav aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="install.html">Install</a>
+      <a href="usage.html" class="active" aria-current="page">Usage</a>
+      <a href="devlog.html">Devlog</a>
+      <a href="https://github.com/rocky59487/block-reality" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <section id="items">
+      <h2>The creative tab</h2>
+
+      <p>Everything is in one creative tab, <strong>Block Reality</strong>.</p>
+
+      <table class="ref-table">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Id</th>
+            <th>What it is</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Structural Steel</td>
+            <td><code>steel_rect_200x400</code></td>
+            <td>a 6-DOF beam, 200 &times; 400 mm section</td>
+          </tr>
+          <tr>
+            <td>Concrete Slab</td>
+            <td><code>concrete_slab_200</code></td>
+            <td>a MITC4 shell facet, 200 mm thick</td>
+          </tr>
+          <tr>
+            <td>Stress Glasses</td>
+            <td>—</td>
+            <td>the lens: hold it to see anything at all</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-note">
+        <p>
+          The two blocks are two different element types, not one type in two colours. Steel is solved as a line
+          element carrying axial force, shear, moment and torsion. A slab is solved as a plate.
+        </p>
+      </div>
+    </section>
+
+    <!-- ========== 接地規則 ========== -->
+    <section id="grounding">
+      <h2>What counts as grounded</h2>
+
+      <p>
+        A structural block is grounded when the block directly below it is a solid, non-structural block. Stone, dirt,
+        anything ordinary.
+      </p>
+      <p>
+        Nothing else grounds anything. A beam butted sideways against a wall is not held by it, and the analysis will
+        correctly call the result a mechanism. That trips people up, but it is the same answer any real frame analysis
+        would give.
+      </p>
+    </section>
+
+    <!-- ========== 三步驟上手 ========== -->
+    <section id="first-build">
+      <h2>Your first structure</h2>
+
+      <div class="step">
+        <div class="step-header">
+          <span class="step-number">1</span>
+          <h3>Build something small</h3>
+        </div>
+        <p>
+          Stack a few Structural Steel blocks on the ground. Start small: with a short column you already know what the
+          answer should be, so it is easy to tell whether you are reading the HUD right.
+        </p>
+        <figure class="shot">
+          <img src="img/buildsomething.png" width="2001" height="1056" loading="lazy"
+            alt="A short column of Structural Steel blocks standing on snow, with the Block Reality items in the hotbar">
+          <figcaption>Four Structural Steel blocks on the ground. The bottom one rests on a solid block, so the whole
+            run is grounded.</figcaption>
+        </figure>
+      </div>
+
+      <div class="step">
+        <div class="step-header">
+          <span class="step-number">2</span>
+          <h3>Hold the Stress Glasses and look at it</h3>
+        </div>
+        <p>
+          The HUD only shows while you are holding the glasses. Look at a member and its section diagram appears in the
+          corner.
+        </p>
+        <figure class="shot">
+          <img src="img/analysis.png" width="2001" height="1057" loading="lazy"
+            alt="The Stress lens reading a single steel member, with a section diagram showing top and bottom fibres both in compression">
+          <figcaption>The Stress lens on that column. Both extreme fibres read
+            <code>COMPRESSION &minus;0.15 MPa</code>: a column carrying only its own weight is in uniform compression,
+            with no bending to make the two faces differ.</figcaption>
+        </figure>
+      </div>
+
+      <div class="step">
+        <div class="step-header">
+          <span class="step-number">3</span>
+          <h3>Put a load on it</h3>
+        </div>
+        <p>
+          Sneak-right-click a block with the glasses in hand to apply a <strong>20 kN test load</strong>. The same click
+          removes it again.
+        </p>
+      </div>
+
+      <div class="callout">
+        <p>A cantilever is worth building next. It is the first case where the numbers are not obvious:</p>
+        <ol>
+          <li>Build a stone wall five blocks high.</li>
+          <li>Put one Structural Steel block on <em>top</em> of the wall, then four more in a line out from it, into
+            the air. The first rests on stone, so it is grounded; the other four hang off it.</li>
+          <li>Hold the Stress Glasses.</li>
+          <li>Sneak-right-click the far end to apply the test load.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ========== 讀 HUD ========== -->
+    <section id="reading">
+      <h2>Reading the HUD</h2>
+
+      <p>The top block of text describes the whole structure. The lines under it describe the member you are looking
+        at.</p>
+
+      <table class="ref-table">
+        <thead>
+          <tr>
+            <th>Line</th>
+            <th>What it means</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>max D/C</code></td>
+            <td>worst demand-to-capacity ratio anywhere in the structure. Below 1 it holds, at or above 1 it does not.
+            </td>
+          </tr>
+          <tr>
+            <td><code>n members</code></td>
+            <td>how many members the solver found, after merging collinear blocks into single runs.</td>
+          </tr>
+          <tr>
+            <td><code>buckling &lambda;_cr</code></td>
+            <td>linear buckling load factor. Multiply the current load by this and it buckles. Below 1 means it buckles
+              under what is already on it.</td>
+          </tr>
+          <tr>
+            <td><code>contour full scale</code></td>
+            <td>the stress range the colour ramp covers right now. It rescales, so the same red will not mean the same
+              number in two different shots.</td>
+          </tr>
+          <tr>
+            <td><code>member #n</code></td>
+            <td>the member under your crosshair, with its section name.</td>
+          </tr>
+          <tr>
+            <td><code>governing fibre</code></td>
+            <td>which face of the section is the critical one. <code>section at x = …</code> is how far along the
+              member that station sits.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        The diagram itself is the stress profile through the depth of the section, with the neutral axis and the
+        extreme fibre values written out.
+      </p>
+
+      <div class="callout callout-note">
+        <p>
+          Whether the top fibre is in tension or compression depends on the structural form, not on the beam. A
+          cantilever hogs, so its top fibre is in tension. A beam supported at both ends sags, so its top fibre is in
+          compression. Both readings are correct, which is why the HUD states them in words rather than leaving them to
+          be inferred from colour.
+        </p>
+      </div>
+    </section>
+
+    <!-- ========== 三個鏡頭 ========== -->
+    <section id="lenses">
+      <h2>The three lenses</h2>
+
+      <p>Right-click the air to cycle through them:</p>
+      <div class="code-box"><code>Utilisation &rarr; Stress &rarr; Material</code></div>
+
+      <p>Utilisation is the one to leave on. It colours every member by how close it is to capacity:</p>
+
+      <ul class="legend">
+        <li><span class="swatch swatch-safe"></span>safe</li>
+        <li><span class="swatch swatch-limit"></span>approaching limit</li>
+        <li><span class="swatch swatch-over"></span>at or over capacity</li>
+      </ul>
+
+      <figure class="shot">
+        <img src="img/somethingbigger.png" width="2001" height="1042" loading="lazy"
+          alt="Utilisation lens across two portal frames, one coloured red at or over capacity, reporting max D/C 2.652">
+        <figcaption>
+          Two portal frames. The near one is red at <code>max D/C 2.652</code>, well past capacity; the far one is
+          still teal. The HUD also reports <code>1 of 2 structures are unrestrained</code>.
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- ========== 值得一試的狀況 ========== -->
+    <section id="cases">
+      <h2>Cases worth trying</h2>
+
+      <dl class="cases">
+        <dt>Nothing supporting it</dt>
+        <dd>Reported as a mechanism rather than a structure. Nothing is holding it up, so there are no stresses.</dd>
+
+        <dt>Overloaded</dt>
+        <dd>Max D/C rises above 1 and the member turns red.</dd>
+
+        <dt>A tall slender column</dt>
+        <dd>Stress D/C stays low while the buckling load factor drops below 1. Strength and stability are different
+          questions.</dd>
+      </dl>
+    </section>
+
+    <!-- ========== 指令 ========== -->
+    <section id="commands">
+      <h2>Commands</h2>
+
+      <table class="ref-table">
+        <thead>
+          <tr>
+            <th>Command</th>
+            <th>What it does</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>/br status</code></td>
+            <td>engine state, every path searched, last result</td>
+          </tr>
+          <tr>
+            <td><code>/br members</code></td>
+            <td>per member: D/C, governing fibre, governing section, peak</td>
+          </tr>
+          <tr>
+            <td><code>/br section &lt;id&gt;</code></td>
+            <td>per station, in text</td>
+          </tr>
+          <tr>
+            <td><code>/br scan [radius]</code></td>
+            <td>re-read the chunks around you (default radius 4, so 9&times;9), for blocks placed by command or
+              WorldEdit</td>
+          </tr>
+          <tr>
+            <td><code>/br resolve</code></td>
+            <td>force re-analysis</td>
+          </tr>
+          <tr>
+            <td><code>/br reset</code></td>
+            <td>restart the engine after it has been disabled (OP only)</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ========== 能力邊界 ========== -->
+    <section id="scope">
+      <h2>Scope</h2>
+
+      <p><strong>Implemented:</strong> 6-DOF beams; MITC4 shells including floors and shear walls; linear buckling with
+        geometric stiffness for both beams and shells; per-member and per-shell D/C; surface stress contours.</p>
+
+      <p><strong>Not implemented:</strong></p>
+      <ul>
+        <li>The shell D/C is an elastic surface screen only. Transverse shear is recovered and reported but not
+          screened, and there is no per-plate buckling check and no plate ultimate strength.</li>
+        <li>No composite reinforced-concrete sections. The section catalogue is solid rectangles and circles, named so.
+        </li>
+        <li>No nonlinear post-buckling. The buckling factor is the linear onset, an upper bound on the real critical
+          load.</li>
+      </ul>
+
+      <p>
+        Every solve returns a global equilibrium residual computed independently from geometry and density rather than
+        read back from the assembled load vector. The verification record for this build — engine identity, every
+        benchmark against its closed form, cross-platform determinism and timing — is in the repository.
+      </p>
+
+      <div class="cta-group">
+        <a href="https://github.com/rocky59487/block-reality/blob/HEAD/evidence/VERIFICATION.md" target="_blank"
+          rel="noopener noreferrer" class="btn btn-secondary mc-btn">Read the verification record</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========== 頁尾 ========== -->
+  <footer>
+    <p>
+      <a href="https://github.com/rocky59487/block-reality" target="_blank" rel="noopener noreferrer">GitHub
+        Repository</a>
+      <a href="https://github.com/rocky59487/block-reality-site" target="_blank" rel="noopener noreferrer">Site
+        Source</a>
+      <a href="https://rocky59487.github.io/block-reality-site/" target="_blank" rel="noopener noreferrer">Live Site</a>
+    </p>
+    <p>&copy; 2026 Block Reality Project. Built with plain HTML &amp; CSS.</p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+
+</html>

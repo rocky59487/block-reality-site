@@ -20,9 +20,14 @@ npx serve .
 
 | File | What it is |
 |---|---|
-| `index.html` | the whole site — one page, three sections |
+| `index.html` | landing page — what the mod is and how it works |
+| `install.html` | installation guide, mod + `br-sidecar` engine |
+| `usage.html` | usage guide — blocks, lenses, HUD, commands |
+| `devlog.html` | the devlogs |
+| `editor.html` | local tool for generating devlog entries |
 | `style.css` | all styling |
 | `img/` | screenshots and GIFs |
+| `install/` | the release payload the install page links to |
 
 ## Related
 
