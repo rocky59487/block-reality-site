@@ -326,6 +326,12 @@
           <div class="code-box"><code>sha256sum -c SHA256SUMS.txt</code></div>
           <p>Or on Windows, one file at a time:</p>
           <div class="code-box"><code>certutil -hashfile br-sidecar.exe SHA256</code></div>
+          <p>
+            One difference to know about if you compare against the <code>v0.1a</code> tag: the
+            <code>install.bat</code> served here is newer. It adds <code>--help</code>, fixes variable expansion in the
+            instance picker, and tolerates a trailing backslash on a path you pass in. The hashes above are for what is
+            served here.
+          </p>
         </div>
       </details>
     </section>
