@@ -50,21 +50,17 @@
     <section id="about">
       <h2>What it is</h2>
 
-      <!-- TODO 階段 1：寫 2–3 段。
-           第一段最重要 —— 投票者只看五秒就決定要不要繼續讀。
-           建議：一句話講清楚「你蓋的東西會被真的算力學，算不過就會塌」。 -->
-      <p>TODO</p>
+      <p>
+        In vanilla Minecraft, gravity stops at sand and gravel. <strong>Block Reality</strong> brings real-world structural engineering into the game by running continuous finite element analysis (FEA) on every structure you construct.
+      </p>
+      <p>
+        Every beam, column, slab, and wall carries self-weight and live loads. If a member's demand exceeds its capacity, it will deform, crack, and ultimately trigger progressive structural collapse.
+      </p>
 
-      <!--
-        圖片。檔案放進 img/ 資料夾，src 寫相對路徑。
-        alt 一定要寫，是給讀不到圖的人看的。
-        TODO 階段 1：把 mod 的截圖放進來
-      -->
       <figure>
         <img src="img/utilisation-lens.jpg"
              alt="Utilisation lens showing member demand-to-capacity ratios in colour">
-        <!-- TODO 階段 1：改成你自己的圖說。img/ 裡還有 section-view.jpg 可用 -->
-        <figcaption>The utilisation lens: red means the member is close to failing.</figcaption>
+        <figcaption>The utilisation lens: color gradients visualize demand-to-capacity ratios (blue = safe, red = critical overload).</figcaption>
       </figure>
     </section>
 
@@ -72,33 +68,39 @@
     <section id="model">
       <h2>How it works</h2>
 
-      <!-- TODO 階段 1：這一段是你的主場，別人抄不走。
-           可以講：一格 = 1 公尺、6 DOF 節點、MITC4 板殼、
-           為什麼構件是共線 run 而不是單一方塊。
-           素材在 block-reality 的 docs/MEMBER_SEMANTICS.md 和 docs/DECISIONS.md -->
-      <p>TODO</p>
+      <p>
+        Block Reality translates voxel grid geometry into rigorous structural engineering models behind the scenes:
+      </p>
+      <ul>
+        <li><strong>Voxel Scale:</strong> 1 Minecraft block is mapped directly as 1 meter ($1\,\text{m} \times 1\,\text{m} \times 1\,\text{m}$).</li>
+        <li><strong>6 DOF Nodes:</strong> Every analytical node maintains 6 degrees of freedom (3 translations, 3 rotations), faithfully transferring axial force, shear, bending moment, and torsion.</li>
+        <li><strong>Collinear Runs:</strong> Rather than treating each block in isolation, continuous blocks are merged into structural member runs (beams, columns, braces) for accurate stiffness matrices and fast solving.</li>
+        <li><strong>MITC4 Shell Elements:</strong> Walls and slabs are modeled with 4-node Mixed Interpolation of Tensorial Components (MITC4) shell formulations to prevent shear locking.</li>
+      </ul>
     </section>
 
     <!-- ========== 區塊 3：開發紀錄 ========== -->
     <section id="devlog">
       <h2>Devlog</h2>
 
-      <!-- TODO 階段 1：每則一個 <article>。
-           寫法照 docs/WEB_KEYWORDS.md 最後那段：
-           先講改了什麼 → 卡在哪 → 一個技術取捨 → 附圖 -->
       <article>
-        <h3>TODO: 標題</h3>
-        <!-- datetime 用 YYYY-MM-DD，是給機器讀的 -->
-        <p><time datetime="2026-09-01">TODO: date</time></p>
-        <p>TODO</p>
+        <h3>Devlog #1: Background Sparse Solver & Utilisation Lens</h3>
+        <p><time datetime="2026-08-15">2026-08-15</time></p>
+        <p>
+          Running full finite element stiffness assembly on every block place or break could easily freeze the Minecraft 20 TPS tick loop. We moved the sparse linear solver into asynchronous worker threads, updating stress states off-tick and streaming utilization buffers directly into custom rendering shaders.
+        </p>
       </article>
     </section>
 
   </main>
 
   <footer>
-    <!-- TODO 階段 1：放 mod 的 repo 連結、Modrinth 連結 -->
-    <p>TODO: links</p>
+    <p>
+      <a href="https://github.com/rocky59487/block-reality" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
+      <a href="https://github.com/rocky59487/block-reality-site" target="_blank" rel="noopener noreferrer">Site Source</a>
+      <a href="https://rocky59487.github.io/block-reality-site/" target="_blank" rel="noopener noreferrer">Live Site</a>
+    </p>
+    <p>&copy; 2026 Block Reality Project. Built with plain HTML & CSS.</p>
   </footer>
 
 </body>

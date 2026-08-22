@@ -25,14 +25,20 @@
   TODO 階段 2：改成你自己的配色。
   建議跟 mod 的利用率鏡頭同一套 —— 低應力偏冷色，超載偏紅。
 */
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
   --bg: #14171a;
   --text: #e6e8ea;
   --muted: #9aa3ab;
-  --accent: #e0533d;   /* 超載的紅 */
+  --accent: #e0533d;
+  /* 超載的紅 */
   --line: #2a2f35;
 
-  --measure: 68ch;     /* 內文最大寬度，超過這個寬度會很難讀 */
+  --measure: 68ch;
+  /* 內文最大寬度，超過這個寬度會很難讀 */
 }
 
 
@@ -65,7 +71,9 @@ footer {
   margin-inline: auto;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   line-height: 1.25;
 }
 
@@ -97,22 +105,85 @@ figcaption {
 }
 
 
-/* ============================================================
-   TODO 階段 2 —— 從這裡開始是你的練習
-   ============================================================
+/* 美化導覽列*/
+nav {
+  display: flex;
+  gap: 1.25rem;
+  margin-top: 1rem;
+  padding: 0.5rem;
+}
 
-   1. 導覽列排成一橫排
-      nav { display: flex; gap: 1rem; }
-      關鍵字：CSS Flexbox guide
+nav a {
+  display: inline-block;
+  text-decoration: none;
+  font-weight: 500;
+  color: var(--muted);
+  transition: color 0.2s ease, transform 0.2s ease;
 
-   2. 手機版調整
-      @media (max-width: 640px) { ... }
-      關鍵字：CSS media query、mobile first CSS
+}
 
-   3. 連結的 hover 效果
-      關鍵字：CSS transition
+nav a:hover {
+  color: var(--text);
+  transform: translateY(-2px);
+}
 
-   4. devlog 每則排成卡片
-      關鍵字：CSS Grid guide
+/* ---------- Devlog 卡片 ---------- */
+article {
+  background: bisque;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin-block: 1.5rem;
+  transition: border-color 0.2s ease;
+}
 
-   ============================================================ */
+/* ---------- 圖片與圖說 ---------- */
+figure {
+  margin: 1.75rem 0;
+}
+
+figure img {
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  display: block;
+}
+
+figcaption {
+  margin-top: 0.6rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+/* ---------- 頁尾 ---------- */
+footer {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+footer a {
+  color: var(--text);
+  margin-right: 1rem;
+}
+
+/* ---------- 手機版響應式 (RWD) ---------- */
+@media (max-width: 640px) {
+  body {
+    padding: 1.5rem 1rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  nav {
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+
+  article {
+    padding: 1rem;
+  }
+}
