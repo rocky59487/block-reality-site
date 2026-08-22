@@ -37,15 +37,19 @@
       <h2>What it is</h2>
 
       <p>
-        In vanilla Minecraft, gravity stops at sand and gravel. <strong>Block Reality</strong> brings real-world structural engineering into the game by running continuous finite element analysis (FEA) on every structure you construct.
+        In vanilla Minecraft, gravity stops at sand and gravel. <strong>Block Reality</strong> brings real-world
+        structural engineering into the game by running continuous finite element analysis (FEA) on every structure you
+        construct.
       </p>
       <p>
-        Every beam, column, slab, and wall carries self-weight and live loads. If a member's demand exceeds its capacity, it will deform, crack, and ultimately trigger progressive structural collapse.
+        Every beam, column, slab, and wall carries self-weight and live loads. If a member's demand exceeds its
+        capacity, it will deform, crack, and ultimately trigger progressive structural collapse.
       </p>
 
       <figure>
         <img src="img/utilisation-lens.jpg" alt="Utilisation lens showing member demand-to-capacity ratios in colour">
-        <figcaption>The utilisation lens: color gradients visualize demand-to-capacity ratios (blue = safe, red = critical overload).</figcaption>
+        <figcaption>The utilisation lens: color gradients visualize demand-to-capacity ratios (blue = safe, red =
+          critical overload).</figcaption>
       </figure>
     </section>
 
@@ -57,10 +61,13 @@
         Block Reality translates voxel grid geometry into rigorous structural engineering models behind the scenes:
       </p>
       <ul>
-        <li><strong>Voxel Scale:</strong> 1 Minecraft block is mapped directly as 1 meter ($1\,\text{m} \times 1\,\text{m} \times 1\,\text{m}$).</li>
-        <li><strong>6 DOF Nodes:</strong> Every analytical node maintains 6 degrees of freedom (3 translations, 3 rotations), faithfully transferring axial force, shear, bending moment, and torsion.</li>
-        <li><strong>Collinear Runs:</strong> Rather than treating each block in isolation, continuous blocks are merged into structural member runs (beams, columns, braces) for accurate stiffness matrices and fast solving.</li>
-        <li><strong>MITC4 Shell Elements:</strong> Walls and slabs are modeled with 4-node Mixed Interpolation of Tensorial Components (MITC4) shell formulations to prevent shear locking.</li>
+        <li><strong>Voxel Scale:</strong> 1 Minecraft block is mapped directly as 1 meter.</li>
+        <li><strong>6 DOF Nodes:</strong> Every analytical node maintains 6 degrees of freedom (3 translations, 3
+          rotations), faithfully transferring axial force, shear, bending moment, and torsion.</li>
+        <li><strong>Collinear Runs:</strong> Rather than treating each block in isolation, continuous blocks are merged
+          into structural member runs (beams, columns, braces) for accurate stiffness matrices and fast solving.</li>
+        <li><strong>MITC4 Shell Elements:</strong> Walls and slabs are modeled with 4-node Mixed Interpolation of
+          Tensorial Components (MITC4) shell formulations to prevent shear locking.</li>
       </ul>
     </section>
 
@@ -72,7 +79,9 @@
         <h3>Devlog #1: Background Sparse Solver & Utilisation Lens</h3>
         <p><time datetime="2026-08-15">2026-08-15</time></p>
         <p>
-          Running full finite element stiffness assembly on every block place or break could easily freeze the Minecraft 20 TPS tick loop. We moved the sparse linear solver into asynchronous worker threads, updating stress states off-tick and streaming utilization buffers directly into custom rendering shaders.
+          Running full finite element stiffness assembly on every block place or break could easily freeze the Minecraft
+          20 TPS tick loop. We moved the sparse linear solver into asynchronous worker threads, updating stress states
+          off-tick and streaming utilization buffers directly into custom rendering shaders.
         </p>
       </article>
     </section>
@@ -81,8 +90,10 @@
 
   <footer>
     <p>
-      <a href="https://github.com/rocky59487/block-reality" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
-      <a href="https://github.com/rocky59487/block-reality-site" target="_blank" rel="noopener noreferrer">Site Source</a>
+      <a href="https://github.com/rocky59487/block-reality" target="_blank" rel="noopener noreferrer">GitHub
+        Repository</a>
+      <a href="https://github.com/rocky59487/block-reality-site" target="_blank" rel="noopener noreferrer">Site
+        Source</a>
       <a href="https://rocky59487.github.io/block-reality-site/" target="_blank" rel="noopener noreferrer">Live Site</a>
     </p>
     <p>&copy; 2026 Block Reality Project. Built with plain HTML & CSS.</p>
