@@ -127,38 +127,95 @@ nav a:hover {
   transform: translateY(-2px);
 }
 
-/* ---------- Devlog 縫線復古手帳卡片 ---------- */
-article {
+/* ---------- Devlog 縫線復古手帳卡片（可收合） ---------- */
+.devlog-card {
   background: bisque;
   color: #2c1f14;
   border: 1px solid #d4a373;
   outline: 2px dashed #8c5828;
   outline-offset: -6px;
   border-radius: 8px;
-  padding: 1.5rem 1.75rem;
+  padding: 1.25rem 1.5rem;
   margin-block: 1.75rem;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-article h3 {
+/* 隱藏瀏覽器原生三角形 marker 並設定游標 */
+.devlog-card summary {
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+.devlog-card summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Header 排版（標題群組 + 右側箭頭） */
+.devlog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.devlog-title-group h3 {
   color: #1a120b;
   font-family: "Georgia", serif;
-  margin-top: 0;
-  margin-bottom: 0.35rem;
+  margin: 0 0 0.25rem 0;
+  font-size: 1.15rem;
 }
 
-article time {
+.devlog-title-group time {
   display: inline-block;
   color: #8c5828;
   font-size: 0.85rem;
   font-weight: 600;
-  margin-bottom: 0.75rem;
 }
 
-article p {
+/* 展開指示箭頭與旋轉過渡動效 */
+.toggle-icon {
+  font-size: 0.85rem;
+  color: #8c5828;
+  display: inline-block;
+  transition: transform 0.25s ease;
+}
+
+details[open] .toggle-icon {
+  transform: rotate(180deg);
+}
+
+/* 展開內容區域 */
+.devlog-content {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed rgba(140, 88, 40, 0.4);
+}
+
+.devlog-content p {
   color: #3b2c20;
   line-height: 1.65;
-  margin: 0;
+  margin: 0 0 1rem 0;
+}
+
+/* 卡片內配圖排版 */
+.devlog-figure {
+  margin: 1.25rem 0 0.25rem 0;
+}
+
+.devlog-figure img {
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid #d4a373;
+  display: block;
+}
+
+.devlog-figure figcaption {
+  margin-top: 0.5rem;
+  color: #6b4423;
+  font-size: 0.85rem;
+  font-style: italic;
 }
 
 
@@ -208,7 +265,7 @@ footer a {
     flex-wrap: wrap;
   }
 
-  article {
+  .devlog-card {
     padding: 1rem;
   }
 }

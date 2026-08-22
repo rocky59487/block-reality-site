@@ -75,15 +75,28 @@
     <section id="devlog">
       <h2>Devlog</h2>
 
-      <article>
-        <h3>Devlog #1: Background Sparse Solver & Utilisation Lens</h3>
-        <p><time datetime="2026-08-15">2026-08-15</time></p>
-        <p>
-          Running full finite element stiffness assembly on every block place or break could easily freeze the Minecraft
-          20 TPS tick loop. We moved the sparse linear solver into asynchronous worker threads, updating stress states
-          off-tick and streaming utilization buffers directly into custom rendering shaders.
-        </p>
-      </article>
+      <details class="devlog-card" open>
+        <summary class="devlog-header">
+          <div class="devlog-title-group">
+            <h3>Devlog #1: Background Sparse Solver &amp; Utilisation Lens</h3>
+            <time datetime="2026-08-15">2026-08-15</time>
+          </div>
+          <span class="toggle-icon" aria-hidden="true">▼</span>
+        </summary>
+
+        <div class="devlog-content">
+          <p>
+            Running full finite element stiffness assembly on every block place or break could easily freeze the Minecraft
+            20 TPS tick loop. We moved the sparse linear solver into asynchronous worker threads, updating stress states
+            off-tick and streaming utilization buffers directly into custom rendering shaders.
+          </p>
+
+          <figure class="devlog-figure">
+            <img src="img/section-view.jpg" alt="Stress analysis sectional cut through a concrete beam structure">
+            <figcaption>Figure 1.1: Section view visualizing member demand-to-capacity distribution calculated off-tick.</figcaption>
+          </figure>
+        </div>
+      </details>
     </section>
 
   </main>
