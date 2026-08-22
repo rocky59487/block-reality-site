@@ -1,0 +1,118 @@
+/* ============================================================
+   Block Reality — 樣式表
+   ============================================================
+   這裡只放「不做會很難看，但做起來沒學到東西」的最低限度。
+   排版、配色、字體是階段 2 的主要練習，從下面的 TODO 開始加。
+   ============================================================ */
+
+
+/* ---------- 全域設定 ---------- */
+
+/*
+  box-sizing: border-box —— 幾乎所有網站的第一行。
+  沒有它的話，你設 width: 300px 再加 padding，實際會變成 340px。
+  排版壞掉八成是因為沒開這個。（關鍵字：box model）
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/*
+  自訂屬性（CSS custom properties）。
+  在這裡改一個值，全站用到的地方一起變。
+  TODO 階段 2：改成你自己的配色。
+  建議跟 mod 的利用率鏡頭同一套 —— 低應力偏冷色，超載偏紅。
+*/
+:root {
+  --bg: #14171a;
+  --text: #e6e8ea;
+  --muted: #9aa3ab;
+  --accent: #e0533d;   /* 超載的紅 */
+  --line: #2a2f35;
+
+  --measure: 68ch;     /* 內文最大寬度，超過這個寬度會很難讀 */
+}
+
+
+/* ---------- 基本排版 ---------- */
+
+body {
+  margin: 0;
+  padding: 2rem 1.25rem;
+  background: var(--bg);
+  color: var(--text);
+
+  /*
+    TODO 階段 2：換字體。用 Google Fonts 挑一組，觀感差最多。
+    （關鍵字：web font pairing、Google Fonts）
+  */
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* 1.6 左右是最省力的可讀性提升 */
+  line-height: 1.6;
+}
+
+/*
+  把內容置中且限制寬度。
+  margin-inline: auto 就是左右自動均分 = 置中。
+*/
+.site-header,
+main,
+footer {
+  max-width: var(--measure);
+  margin-inline: auto;
+}
+
+h1, h2, h3 {
+  line-height: 1.25;
+}
+
+img {
+  /* 圖片不要撐破容器。這兩行幾乎是必備 */
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: var(--accent);
+}
+
+
+/* ---------- 區塊分隔 ---------- */
+
+section {
+  padding-block: 2.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.tagline {
+  color: var(--muted);
+}
+
+figcaption {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+
+/* ============================================================
+   TODO 階段 2 —— 從這裡開始是你的練習
+   ============================================================
+
+   1. 導覽列排成一橫排
+      nav { display: flex; gap: 1rem; }
+      關鍵字：CSS Flexbox guide
+
+   2. 手機版調整
+      @media (max-width: 640px) { ... }
+      關鍵字：CSS media query、mobile first CSS
+
+   3. 連結的 hover 效果
+      關鍵字：CSS transition
+
+   4. devlog 每則排成卡片
+      關鍵字：CSS Grid guide
+
+   ============================================================ */

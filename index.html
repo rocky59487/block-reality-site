@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  Block Reality — 專案網站
+  ============================================================
+  這是骨架，不是成品。標著 TODO 的地方是留給你寫的。
+  每個 TODO 後面括號裡是 docs/WEB_KEYWORDS.md 的對應階段。
+
+  改完存檔 → 瀏覽器重新整理就看得到。
+  推上 GitHub 後約 1 分鐘，線上網址才會更新。
+-->
+<html lang="en">
+<head>
+  <!-- 這行沒有的話中文會變亂碼，第一個字元就要放（階段 1） -->
+  <meta charset="utf-8">
+  <!-- 這行沒有的話手機上整頁會被縮小（階段 1） -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- TODO 階段 1：改成你要的標題，會顯示在分頁上 -->
+  <title>Block Reality — real structural engineering in Minecraft</title>
+
+  <!-- TODO 階段 1：一句話講這是什麼，Google 和分享預覽會用到 -->
+  <meta name="description" content="A Minecraft Forge mod that runs real finite element analysis on what you build.">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- ========== 頁首與導覽 ========== -->
+  <header class="site-header">
+    <h1>Block Reality</h1>
+    <!-- TODO 階段 1：一句話的副標 -->
+    <p class="tagline">Real structural engineering, inside Minecraft.</p>
+
+    <!--
+      導覽列。href 的 # 後面要對到下面 section 的 id，打錯就跳不過去。
+      TODO 階段 2：用 flexbox 把它排成一橫排
+    -->
+    <nav>
+      <a href="#about">What it is</a>
+      <a href="#model">How it works</a>
+      <a href="#devlog">Devlog</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ========== 區塊 1：這是什麼 ========== -->
+    <section id="about">
+      <h2>What it is</h2>
+
+      <!-- TODO 階段 1：寫 2–3 段。
+           第一段最重要 —— 投票者只看五秒就決定要不要繼續讀。
+           建議：一句話講清楚「你蓋的東西會被真的算力學，算不過就會塌」。 -->
+      <p>TODO</p>
+
+      <!--
+        圖片。檔案放進 img/ 資料夾，src 寫相對路徑。
+        alt 一定要寫，是給讀不到圖的人看的。
+        TODO 階段 1：把 mod 的截圖放進來
+      -->
+      <figure>
+        <img src="img/utilisation-lens.jpg"
+             alt="Utilisation lens showing member demand-to-capacity ratios in colour">
+        <!-- TODO 階段 1：改成你自己的圖說。img/ 裡還有 section-view.jpg 可用 -->
+        <figcaption>The utilisation lens: red means the member is close to failing.</figcaption>
+      </figure>
+    </section>
+
+    <!-- ========== 區塊 2：力學模型 ========== -->
+    <section id="model">
+      <h2>How it works</h2>
+
+      <!-- TODO 階段 1：這一段是你的主場，別人抄不走。
+           可以講：一格 = 1 公尺、6 DOF 節點、MITC4 板殼、
+           為什麼構件是共線 run 而不是單一方塊。
+           素材在 block-reality 的 docs/MEMBER_SEMANTICS.md 和 docs/DECISIONS.md -->
+      <p>TODO</p>
+    </section>
+
+    <!-- ========== 區塊 3：開發紀錄 ========== -->
+    <section id="devlog">
+      <h2>Devlog</h2>
+
+      <!-- TODO 階段 1：每則一個 <article>。
+           寫法照 docs/WEB_KEYWORDS.md 最後那段：
+           先講改了什麼 → 卡在哪 → 一個技術取捨 → 附圖 -->
+      <article>
+        <h3>TODO: 標題</h3>
+        <!-- datetime 用 YYYY-MM-DD，是給機器讀的 -->
+        <p><time datetime="2026-09-01">TODO: date</time></p>
+        <p>TODO</p>
+      </article>
+    </section>
+
+  </main>
+
+  <footer>
+    <!-- TODO 階段 1：放 mod 的 repo 連結、Modrinth 連結 -->
+    <p>TODO: links</p>
+  </footer>
+
+</body>
+</html>
