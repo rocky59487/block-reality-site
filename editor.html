@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Block Reality — Devlog 快速發布器</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ============================================================
+       Devlog 快速發布器專用樣式
+       ============================================================ */
+    body {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    .editor-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      margin-top: 2rem;
+    }
+
+    /* 左側表單面板 */
+    .form-panel {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 1.75rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .form-panel h2 {
+      margin-top: 0;
+      color: var(--text);
+      font-size: 1.35rem;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 0.75rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: #0f1215;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      color: var(--text);
+      font-size: 0.95rem;
+      box-sizing: border-box;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(224, 83, 61, 0.2);
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 140px;
+      line-height: 1.6;
+    }
+
+    /* 圖片上傳拖曳區 */
+    .file-dropzone {
+      border: 2px dashed var(--line);
+      border-radius: 8px;
+      padding: 1.25rem;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .file-dropzone:hover {
+      border-color: var(--accent);
+      background: rgba(224, 83, 61, 0.05);
+    }
+
+    .file-dropzone input[type="file"] {
+      display: none;
+    }
+
+    /* 操作按鈕列 */
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .btn-action {
+      flex: 1;
+      padding: 0.85rem 1.25rem;
+      border-radius: 6px;
+      border: none;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: transform 0.15s ease, opacity 0.2s ease;
+    }
+
+    .btn-action:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-copy {
+      background: var(--accent);
+      color: #ffffff;
+    }
+
+    .btn-auto-write {
+      background: #27ae60;
+      color: #ffffff;
+    }
+
+    /* 右側即時預覽面板 */
+    .preview-panel {
+      position: sticky;
+      top: 2rem;
+    }
+
+    .preview-panel h2 {
+      margin-top: 0;
+      color: var(--muted);
+      font-size: 1.15rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* 複製成功提示 Toast */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #27ae60;
+      color: white;
+      padding: 0.85rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      z-index: 10000;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    @media (max-width: 860px) {
+      .editor-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <h1>📝 Devlog 快速發布器</h1>
+    <p class="tagline">只要打字、選照片，不用寫 HTML 就能生成手帳卡片！</p>
+    <nav>
+      <a href="index.html">← 回首頁 Home</a>
+      <a href="devlog.html">查看日誌 Devlog</a>
+    </nav>
+  </header>
+
+  <div class="editor-layout">
+
+    <!-- 左側：輸入表單 -->
+    <div class="form-panel">
+      <h2>✍️ 撰寫新篇章</h2>
+
+      <div class="form-group">
+        <label for="log-number">編號 / 標題 (Title)</label>
+        <input type="text" id="log-title" class="form-control" placeholder="例：Devlog #2: 實作 Minecraft 方塊粒子" value="Devlog #2: ">
+      </div>
+
+      <div class="form-group">
+        <label for="log-date">發布日期 (Date)</label>
+        <input type="date" id="log-date" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="log-content">內文段落 (Content)</label>
+        <textarea id="log-content" class="form-control" placeholder="輸入你想記錄的學習進度或技術細節..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>配圖選擇 (Image)</label>
+        <div class="file-dropzone" onclick="document.getElementById('file-input').click()">
+          <span id="dropzone-text">📷 點擊選擇照片（支援 .png, .jpg）</span>
+          <input type="file" id="file-input" accept="image/*">
+        </div>
+      </div>
+
+      <div class="form-group" id="caption-group" style="display: none;">
+        <label for="log-caption">圖片說明 (Figcaption)</label>
+        <input type="text" id="log-caption" class="form-control" placeholder="例：Particle burst FX in Minecraft">
+      </div>
+
+      <div class="action-buttons">
+        <button type="button" class="btn-action btn-copy" onclick="copyCardHtml()">
+          📋 複製卡片 HTML
+        </button>
+        <button type="button" class="btn-action btn-auto-write" onclick="autoWriteDevlog()">
+          🚀 一鍵寫入 devlog.html
+        </button>
+      </div>
+    </div>
+
+    <!-- 右側：即時預覽 -->
+    <div class="preview-panel">
+      <h2>👀 即時卡片預覽</h2>
+      <div id="preview-container">
+        <!-- 即時渲染的卡片 -->
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 提示訊息 -->
+  <div id="toast" class="toast">✅ 已複製到剪貼簿！</div>
+
+  <script>
+    // 預設日期設為今天
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('log-date').value = today;
+
+    let selectedImageName = '';
+    let selectedImageDataUrl = '';
+
+    // 監聽圖片選擇
+    document.getElementById('file-input').addEventListener('change', function (e) {
+      const file = e.target.files[0];
+      if (file) {
+        selectedImageName = file.name;
+        document.getElementById('dropzone-text').textContent = '✅ 已選擇：' + file.name + '（請確認圖片放於 img/ 資料夾中）';
+        document.getElementById('caption-group').style.display = 'block';
+
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          selectedImageDataUrl = event.target.result;
+          renderPreview();
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // 監聽輸入即時渲染
+    document.getElementById('log-title').addEventListener('input', renderPreview);
+    document.getElementById('log-date').addEventListener('input', renderPreview);
+    document.getElementById('log-content').addEventListener('input', renderPreview);
+    document.getElementById('log-caption').addEventListener('input', renderPreview);
+
+    function renderPreview() {
+      const title = document.getElementById('log-title').value.trim() || 'Devlog #2: 標題預覽';
+      const date = document.getElementById('log-date').value || today;
+      const content = document.getElementById('log-content').value.trim() || '這裡會即時顯示你輸入的內文段落...';
+      const caption = document.getElementById('log-caption').value.trim() || '圖片說明文字';
+
+      let figureHtml = '';
+      if (selectedImageDataUrl) {
+        figureHtml = `
+          <figure class="devlog-figure">
+            <img src="${selectedImageDataUrl}" alt="${caption}">
+            <figcaption>${caption}</figcaption>
+          </figure>
+        `;
+      }
+
+      const previewHtml = `
+        <details class="devlog-card" name="devlog" open>
+          <summary class="devlog-header">
+            <div class="devlog-title-group">
+              <h3>${escapeHtml(title)}</h3>
+              <time datetime="${date}">${date}</time>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </summary>
+          <div class="devlog-content">
+            <p>${escapeHtml(content).replace(/\n/g, '<br>')}</p>
+            ${figureHtml}
+          </div>
+        </details>
+      `;
+
+      document.getElementById('preview-container').innerHTML = previewHtml;
+    }
+
+    // 產生標準卡片 HTML 代碼
+    function generateHtmlCode() {
+      const title = document.getElementById('log-title').value.trim();
+      const date = document.getElementById('log-date').value || today;
+      const content = document.getElementById('log-content').value.trim();
+      const caption = document.getElementById('log-caption').value.trim();
+
+      let figureCode = '';
+      if (selectedImageName) {
+        figureCode = `
+          <figure class="devlog-figure">
+            <img src="img/${selectedImageName}" alt="${caption}">
+            <figcaption>${caption}</figcaption>
+          </figure>`;
+      }
+
+      return `      <!-- ${title} -->
+      <details class="devlog-card" name="devlog" open>
+        <summary class="devlog-header">
+          <div class="devlog-title-group">
+            <h3>${title}</h3>
+            <time datetime="${date}">${date}</time>
+          </div>
+          <span class="toggle-icon" aria-hidden="true">▼</span>
+        </summary>
+        <div class="devlog-content">
+          <p>${content}</p>${figureCode}
+        </div>
+      </details>`;
+    }
+
+    // 複製到剪貼簿
+    function copyCardHtml() {
+      const code = generateHtmlCode();
+      navigator.clipboard.writeText(code).then(() => {
+        showToast('📋 已複製 HTML 代碼！貼到 devlog.html 最上方即可！');
+      }).catch(() => {
+        showToast('❌ 複製失敗，請手動選取複製');
+      });
+    }
+
+    // 🚀 一鍵直接寫入 devlog.html (使用現代瀏覽器 File System Access API)
+    async function autoWriteDevlog() {
+      const code = generateHtmlCode();
+      try {
+        if ('showOpenFilePicker' in window) {
+          showToast('📂 請選取你的 devlog.html 檔案以直接寫入...');
+          const [fileHandle] = await window.showOpenFilePicker({
+            types: [{
+              description: 'HTML Files',
+              accept: { 'text/html': ['.html'] }
+            }]
+          });
+
+          const file = await fileHandle.getFile();
+          let text = await file.text();
+
+          // 尋找 <section id="devlog"> 下方的 <h2>devlog</h2>
+          const insertMarker = '<h2>devlog</h2>';
+          if (text.includes(insertMarker)) {
+            // 將原本已存在的 details 裡的 open 移除，確保只有新篇展開
+            const parts = text.split(insertMarker);
+            let restContent = parts[1];
+
+            // 替換第一個原本開著的 open
+            restContent = restContent.replace('<details class="devlog-card" name="devlog" open>', '<details class="devlog-card" name="devlog">');
+
+            const updatedText = parts[0] + insertMarker + '\n' + code + restContent;
+
+            const writable = await fileHandle.createWritable();
+            await writable.write(updatedText);
+            await writable.close();
+
+            showToast('🎉 成功自動寫入 devlog.html！');
+          } else {
+            showToast('⚠️ 未找到 <h2>devlog</h2> 標記，請使用複製功能');
+          }
+        } else {
+          copyCardHtml();
+        }
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          copyCardHtml();
+        }
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    function escapeHtml(text) {
+      const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+      };
+      return text.replace(/[&<>"']/g, (m) => map[m]);
+    }
+
+    // 初始渲染一次
+    renderPreview();
+  </script>
+</body>
+
+</html>
