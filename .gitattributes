@@ -4,14 +4,13 @@
 *.jpg binary
 *.png binary
 *.gif binary
+*.webp binary
 *.jar binary
 *.exe binary
 
 # 發布 payload 一律逐位元組保存，不做任何行尾轉換。
 # commit 的內容 = GitHub Pages 送出的內容 = SHA256SUMS.txt 描述的內容。
-# 沒有這條的話 install.bat 會以 LF 存進 blob，下載下來的 checksum 對不上，
-# 而且 LF 版的 .bat 在 goto :label 上有實際執行風險。
+# 沒有這條的話 text=auto 會去猜，而任何一個位元組的差異都會讓下載下來的
+# checksum 對不上發布頁公布的值。
 install/** -text
 install/*.jar binary
-install/*.exe binary
-install/br-sidecar binary

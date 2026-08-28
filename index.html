@@ -6,9 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Block Reality — real structural engineering in Minecraft</title>
-  <meta name="description" content="A Minecraft Forge mod that runs real finite element analysis on what you build.">
+  <meta name="description"
+    content="A Minecraft Forge mod that runs real finite element analysis on what you build. Beams, plates, buckling, and a demand-to-capacity readout you can walk around.">
 
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Block Reality — real structural engineering in Minecraft">
+  <meta property="og:description"
+    content="A Forge mod that runs real finite element analysis on what you build. Beams, plates, buckling, and a demand-to-capacity readout you can walk around.">
+  <meta property="og:image" content="https://rocky59487.github.io/block-reality-site/img/utilisation-lens.webp">
+  <meta property="og:url" content="https://rocky59487.github.io/block-reality-site/">
+  <meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body>
@@ -33,24 +43,33 @@
     <section id="hero">
       <h2>Real structural engineering, inside Minecraft</h2>
 
+      <div class="badge-group">
+        <span class="badge">Version <strong>0.3b</strong></span>
+        <span class="badge">Minecraft <strong>1.20.1</strong></span>
+        <span class="badge">Forge <strong>47.x</strong></span>
+      </div>
+
       <p>
-        In vanilla Minecraft, gravity stops at sand and gravel. <strong>Block Reality</strong> brings real-world
-        structural engineering into the game by running continuous finite element analysis (FEA) on every structure you
-        construct.
+        In vanilla Minecraft, gravity stops at sand and gravel. <strong>Block Reality</strong> reads what you build as
+        a structural model and hands it to a real finite element engine — the same kind of solve an engineer runs on a
+        building before it gets poured.
       </p>
       <p>
-        Every beam, column, slab, and wall carries self-weight and live loads. If a member's demand exceeds its
-        capacity, it will deform, crack, and ultimately trigger progressive structural collapse.
+        Every beam, column, slab and wall carries its own self-weight. Put a load on a member and you get back its
+        demand-to-capacity ratio, the governing fibre, the stress profile through the section depth, and — separately,
+        because it is a separate question — whether the thing is about to buckle.
       </p>
 
       <figure>
-        <img src="img/utilisation-lens.jpg" alt="Utilisation lens showing member demand-to-capacity ratios in colour">
-        <figcaption>The utilisation lens: color gradients visualize demand-to-capacity ratios (blue = safe, red =
-          critical overload).</figcaption>
+        <img src="img/utilisation-lens.webp" width="1600" height="842" loading="lazy" decoding="async"
+          alt="Utilisation lens showing member demand-to-capacity ratios in colour">
+        <figcaption>The utilisation lens: colour is demand over capacity, cold through amber to vermilion. This is the
+          view that answers <em>where is it closest to failing</em>.</figcaption>
       </figure>
+
       <div class="cta-group">
         <a href="install.html" class="btn btn-primary mc-btn">Install the mod</a>
-        <a href="devlog.html" class="btn btn-secondary mc-btn">Read Devlogs</a>
+        <a href="usage.html" class="btn btn-secondary mc-btn">How to use it</a>
         <a href="https://github.com/rocky59487/block-reality" target="_blank" rel="noopener noreferrer"
           class="btn btn-secondary mc-btn">GitHub Repository</a>
       </div>
@@ -61,17 +80,61 @@
       <h2>How it works</h2>
 
       <p>
-        Block Reality translates voxel grid geometry into rigorous structural engineering models behind the scenes:
+        Block Reality translates voxel geometry into a structural model behind the scenes:
       </p>
       <ul>
-        <li><strong>Voxel Scale:</strong> 1 Minecraft block is mapped directly as 1 meter.</li>
-        <li><strong>6 DOF Nodes:</strong> Every analytical node maintains 6 degrees of freedom (3 translations, 3
-          rotations), faithfully transferring axial force, shear, bending moment, and torsion.</li>
-        <li><strong>Collinear Runs:</strong> Rather than treating each block in isolation, continuous blocks are merged
-          into structural member runs (beams, columns, braces) for accurate stiffness matrices and fast solving.</li>
-        <li><strong>MITC4 Shell Elements:</strong> Walls and slabs are modeled with 4-node Mixed Interpolation of
-          Tensorial Components (MITC4) shell formulations to prevent shear locking.</li>
+        <li><strong>Voxel scale:</strong> one Minecraft block is one metre.</li>
+        <li><strong>6-DOF nodes:</strong> every analytical node carries six degrees of freedom — three translations,
+          three rotations — so axial force, shear, bending moment and torsion all transfer properly.</li>
+        <li><strong>Collinear runs:</strong> continuous blocks in a line are merged into one member rather than solved
+          block by block, which is both more correct and much faster.</li>
+        <li><strong>MITC4 shells:</strong> slabs and walls are four-node Mixed Interpolation of Tensorial Components
+          facets, chosen over a grillage because a grillage reports exactly zero for in-plane shear — the one load path
+          a shear wall exists to carry.</li>
+        <li><strong>Buckling, reported separately:</strong> a linear buckling solve with geometric stiffness runs
+          alongside the stress check. A slender column can sit at a comfortable D/C and still be past its critical
+          load; folding the two into one number would hide that.</li>
       </ul>
+
+      <p>
+        A 199-member model solves in about 0.1 s, and not on the tick thread — so that is the latency before the
+        numbers appear, not time taken away from the game.
+      </p>
+    </section>
+
+    <!-- ========== 誠實邊界 ========== -->
+    <section id="scope">
+      <h2>What it does, and what it does not</h2>
+
+      <p>
+        It is an <strong>analysis and visualisation</strong> tool. It tells you what the forces are and where the
+        structure is closest to failing. Blocks do not crack, deform or fall down — overload turns a member red and
+        pushes <code>max D/C</code> past 1, and an unsupported structure is reported as a mechanism rather than
+        collapsing. Progressive collapse is on the roadmap for 0.4, not in this build.
+      </p>
+
+      <p>
+        Implemented today: 6-DOF beams, MITC4 shells including floors and shear walls, linear buckling for both,
+        per-member and per-shell demand-to-capacity, and surface stress contours you can walk around and read off both
+        faces of a slab.
+      </p>
+
+      <p>
+        Not implemented, stated plainly: no reinforced-concrete composite sections — the catalogue is solid rectangles
+        and circles, and the tokens say so. No per-plate buckling check. No nonlinear post-buckling, so the buckling
+        factor is the linear onset and an upper bound on the real critical load.
+      </p>
+
+      <div class="callout callout-note">
+        <p>
+          Every solve returns a global equilibrium residual, recomputed independently from geometry and density rather
+          than read back out of the assembled load vector — so it is a statement about the answer that does not depend
+          on the solver agreeing with itself. <code>/br status</code> prints it. The full verification record, every
+          benchmark against its closed form, lives in
+          <a href="https://github.com/rocky59487/block-reality/blob/main/evidence/VERIFICATION.md" target="_blank"
+            rel="noopener noreferrer">evidence/VERIFICATION.md</a>.
+        </p>
+      </div>
     </section>
 
     <!-- ========== devlog snapshot ========== -->
@@ -86,7 +149,7 @@
             <h3>Devlog #1: First Steps into Web Development</h3>
             <time datetime="2026-08-21">2026-08-21</time>
           </div>
-          <span class="toggle-icon">▶</span>
+          <span class="toggle-icon" aria-hidden="true">▶</span>
         </summary>
         <div class="devlog-content">
           <p>
@@ -98,6 +161,7 @@
       </details>
     </section>
   </main>
+
   <footer>
     <p>
       <a href="https://github.com/rocky59487/block-reality" target="_blank" rel="noopener noreferrer">GitHub

@@ -444,6 +444,66 @@ code {
   color: #9ecbff;
 }
 
+/*
+  主控台輸出。跟 .code-box 的差別是這裡放的是「程式吐出來的東西」而不是
+  「你要打的東西」——所以有標題列、不上強調色左框，而且逐字保留換行。
+*/
+.term {
+  background: #0b0d0f;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  margin-block: 1rem;
+  overflow: hidden;
+}
+
+.term-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.85rem;
+  background: #16191d;
+  border-bottom: 1px solid var(--line);
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.term-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: #3e444b;
+  flex: none;
+}
+
+.term pre {
+  margin: 0;
+  padding: 0.9rem 1rem;
+  overflow-x: auto;
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: #c9d1d9;
+}
+
+.term .ok {
+  color: #7ee787;
+}
+
+.term .warn {
+  color: var(--accent);
+}
+
+.term .dim {
+  color: var(--muted);
+}
+
+/* 檔案樹裡「使用者自己放的那一個」，跟系統生出來的區分開 */
+.tree-mine {
+  color: #ffd479;
+  font-weight: 600;
+}
+
 kbd {
   display: inline-block;
   background: #202428;
