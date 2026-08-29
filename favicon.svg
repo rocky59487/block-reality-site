@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Block Reality">
+  <title>Block Reality</title>
+
+  <!-- 利用率鏡頭的配色：低應力偏冷、超載偏紅 -->
+  <defs>
+    <linearGradient id="dc" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#4a9fd8" />
+      <stop offset="0.55" stop-color="#f39c12" />
+      <stop offset="1" stop-color="#e0533d" />
+    </linearGradient>
+  </defs>
+
+  <rect width="32" height="32" rx="6" fill="#14171a" />
+
+  <!-- 支承：接地的那一格 -->
+  <rect x="5" y="17" width="7" height="10" fill="#2a2f35" />
+
+  <!-- 懸臂梁，顏色沿跨度由安全走到超載 -->
+  <rect x="5" y="11" width="22" height="5" fill="url(#dc)" />
+
+  <!-- 末端荷載 -->
+  <path d="M24.5 18.5v4.5m0 0l-2-2m2 2l2-2" stroke="#e6e8ea" stroke-width="1.6"
+    stroke-linecap="round" stroke-linejoin="round" fill="none" />
+</svg>
