@@ -278,7 +278,9 @@
           <tr>
             <td><code>buckling &lambda;_cr</code></td>
             <td>linear buckling load factor. Multiply the current load by this and it buckles. Below 1 means it buckles
-              under what is already on it.</td>
+              under what is already on it. On a structure past <code>bucklingBlockLimit</code> blocks (300 by default)
+              the line reads <em>buckling not evaluated (structure size)</em> instead, since that solve grows as the
+              cube of the model; strength still runs.</td>
           </tr>
           <tr>
             <td><code>contour full scale</code></td>
@@ -434,8 +436,13 @@
           screened, and there is no per-plate buckling check and no plate ultimate strength.</li>
         <li>No composite reinforced-concrete sections. The section catalogue is solid rectangles and circles, named so.
         </li>
-        <li>No nonlinear post-buckling. The buckling factor is the linear onset, an upper bound on the real critical
-          load.</li>
+        <li>No nonlinear post-buckling. The buckling factor is the linear onset.</li>
+        <li>The buckling factor is mesh-sensitive. A straight run is one element carrying one constant axial force,
+          which is within 0.5% of Euler when the real axial force is nearly constant, and 68% low when it varies — a
+          19&nbsp;m column buckling under its own weight reports 3.14 against an exact 9.89, climbing to 9.15 at
+          nineteen elements. Adding a one-newton test load at mid-height therefore raises the figure by 68%, because
+          the run splits. Read it as conservative in that regime; earlier releases called it an upper bound, which was
+          wrong here.</li>
       </ul>
 
       <p>

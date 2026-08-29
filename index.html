@@ -44,7 +44,7 @@
       <h2>Real structural engineering, inside Minecraft</h2>
 
       <div class="badge-group">
-        <span class="badge">Version <strong>0.3b</strong></span>
+        <span class="badge">Version <strong>0.3c</strong></span>
         <span class="badge">Minecraft <strong>1.20.1</strong></span>
         <span class="badge">Forge <strong>47.x</strong></span>
       </div>
@@ -87,7 +87,8 @@
         <li><strong>6-DOF nodes:</strong> every analytical node carries six degrees of freedom — three translations,
           three rotations — so axial force, shear, bending moment and torsion all transfer properly.</li>
         <li><strong>Collinear runs:</strong> continuous blocks in a line are merged into one member rather than solved
-          block by block, which is both more correct and much faster.</li>
+          block by block — correct for strength, and much faster. It also means one element per run, which the
+          buckling number is sensitive to; the <a href="#scope">scope section</a> gives the measurement.</li>
         <li><strong>MITC4 shells:</strong> slabs and walls are four-node Mixed Interpolation of Tensorial Components
           facets, chosen over a grillage because a grillage reports exactly zero for in-plane shear — the one load path
           a shear wall exists to carry.</li>
@@ -97,8 +98,9 @@
       </ul>
 
       <p>
-        A 199-member model solves in about 0.1 s, and not on the tick thread — so that is the latency before the
-        numbers appear, not time taken away from the game.
+        A 199-member model solves in about 50 ms on the reference laptop, and not on the tick thread — so that is the
+        latency before the numbers appear, not time taken away from the game. Above 300 blocks the buckling solve is
+        skipped by default and the HUD says so, because that solve grows as the cube of the model.
       </p>
     </section>
 
@@ -120,9 +122,22 @@
       </p>
 
       <p>
-        Not implemented, stated plainly: no reinforced-concrete composite sections — the catalogue is solid rectangles
-        and circles, and the tokens say so. No per-plate buckling check. No nonlinear post-buckling, so the buckling
-        factor is the linear onset and an upper bound on the real critical load.
+        Not implemented, stated plainly: reinforced-concrete composite sections — the catalogue is solid rectangles and
+        circles, and the tokens say so — per-plate buckling, and nonlinear post-buckling. The buckling factor is the
+        linear onset.
+      </p>
+
+      <p>
+        How accurate that onset is depends on the mesh, which is worth knowing before you rely on it. A straight run is
+        one element, so it carries one constant axial force. Where the real axial force is nearly constant that is
+        excellent: a 19&nbsp;m cantilever under a top load 400× its self weight lands within <strong>0.5%</strong> of
+        the Euler value. Where the axial force varies along the member it is not: the same column buckling under
+        <strong>its own weight</strong> reports <strong>3.14</strong> where the exact answer is
+        <strong>9.89</strong> — 68% low, so conservative — and climbs to 9.15 once nineteen elements exist. A
+        one-newton test load at mid-height raises the reported factor by 68%, because it splits the run in two. Both
+        figures come from scripts that ship in the repository and run against the engine you installed; earlier
+        releases described this number as an upper bound on the real critical load, which is wrong for the
+        self-weight case and has been withdrawn.
       </p>
 
       <div class="callout callout-note">

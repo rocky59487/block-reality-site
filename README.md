@@ -21,7 +21,7 @@ npx serve .
 | File | What it is |
 |---|---|
 | `index.html` | landing page — what the mod is, and what it is not |
-| `install.html` | installation guide, currently v0.3b |
+| `install.html` | installation guide, currently v0.3c |
 | `usage.html` | usage guide — blocks, lenses, HUD, commands |
 | `devlog.html` | the devlogs |
 | `editor.html` | local tool for generating devlog entries |

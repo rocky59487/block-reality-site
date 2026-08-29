@@ -1,1 +1,1 @@
-0838482f19816d010d2abb326334d9acdae92c5110feabc76aca181e8ec6f3fb  blockreality-0.3b.jar
+f38c88e1425f13d9e5f072072de475110a3c3ffd0a91034fdb814b5468ed82ce  blockreality-0.3c.jar
