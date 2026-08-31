@@ -9,3 +9,6 @@ desktop.ini
 
 # node（只有跑 npx serve 之類的工具才會出現）
 node_modules/
+
+# local agent tool metadata
+.serena/

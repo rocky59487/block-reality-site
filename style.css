@@ -243,16 +243,43 @@ figcaption {
 
 /* ---------- 頁尾 ---------- */
 footer {
-  margin-top: 3rem;
+  margin-top: 3.5rem;
   padding-top: 2rem;
   border-top: 1px solid var(--line);
   color: var(--muted);
   font-size: 0.9rem;
 }
 
-footer a {
+.footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.footer-nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   color: var(--text);
-  margin-right: 1rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-nav a:hover {
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.footer-nav a.curseforge-link:hover {
+  color: #f16436;
+}
+
+.footer-copyright {
+  margin-top: 0.75rem;
+  color: var(--muted);
+  font-size: 0.85rem;
 }
 
 /*----按鈕----*/
@@ -298,6 +325,212 @@ footer a {
 
 .btn-secondary:hover {
   background: var(--line);
+}
+
+.btn-curseforge {
+  background: #f16436;
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 2px 8px rgba(241, 100, 54, 0.35);
+}
+
+.btn-curseforge:hover {
+  background: #ff7547;
+  box-shadow: 0 4px 16px rgba(241, 100, 54, 0.55);
+}
+
+.btn-github {
+  background: #24292e;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-github:hover {
+  background: #2f363d;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* ============================================================
+   專案資源與外連卡片 (Project Link Cards & Hub)
+   ============================================================ */
+
+.link-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin-block: 1.5rem;
+}
+
+.link-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1.35rem;
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.link-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: transparent;
+  transition: background 0.25s ease;
+}
+
+.link-card:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+.link-card.card-curseforge:hover::before {
+  background: #f16436;
+}
+
+.link-card.card-mod-repo:hover::before {
+  background: #388bfd;
+}
+
+.link-card.card-site-repo:hover::before {
+  background: #a371f7;
+}
+
+.link-card.card-live-site:hover::before {
+  background: var(--accent);
+}
+
+.link-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.link-card-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.link-card-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+
+.link-card-icon svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.card-curseforge .link-card-icon {
+  background: rgba(241, 100, 54, 0.15);
+  border-color: rgba(241, 100, 54, 0.3);
+  color: #f16436;
+}
+
+.card-mod-repo .link-card-icon {
+  background: rgba(56, 139, 253, 0.15);
+  border-color: rgba(56, 139, 253, 0.3);
+  color: #58a6ff;
+}
+
+.card-site-repo .link-card-icon {
+  background: rgba(163, 113, 247, 0.15);
+  border-color: rgba(163, 113, 247, 0.3);
+  color: #bc8cff;
+}
+
+.card-live-site .link-card-icon {
+  background: rgba(224, 83, 61, 0.15);
+  border-color: rgba(224, 83, 61, 0.3);
+  color: var(--accent);
+}
+
+.link-card-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.link-card-arrow {
+  color: var(--muted);
+  font-size: 1.1rem;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.link-card:hover .link-card-arrow {
+  transform: translate(2px, -2px);
+  color: var(--text);
+}
+
+.link-card-desc {
+  margin: 0 0 1rem 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.link-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.link-card-tag {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--muted);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.card-curseforge .link-card-tag.highlight {
+  background: rgba(241, 100, 54, 0.18);
+  color: #ff8c66;
+  border-color: rgba(241, 100, 54, 0.35);
+}
+
+.card-mod-repo .link-card-tag.highlight {
+  background: rgba(56, 139, 253, 0.18);
+  color: #79c0ff;
+  border-color: rgba(56, 139, 253, 0.35);
+}
+
+.card-site-repo .link-card-tag.highlight {
+  background: rgba(163, 113, 247, 0.18);
+  color: #d2a8ff;
+  border-color: rgba(163, 113, 247, 0.35);
+}
+
+.card-live-site .link-card-tag.highlight {
+  background: rgba(224, 83, 61, 0.18);
+  color: #ff998a;
+  border-color: rgba(224, 83, 61, 0.35);
 }
 
 .section-header-inline {
