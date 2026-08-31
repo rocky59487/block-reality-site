@@ -48,7 +48,91 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
+
+  initCompareViewers();
 });
+
+/**
+ * 載重前後比較器互動邏輯
+ */
+function initCompareViewers() {
+  document.querySelectorAll(".compare-viewer").forEach((viewer) => {
+    const tabs = viewer.querySelectorAll(".compare-tab");
+    const slides = viewer.querySelectorAll(".compare-slide");
+    const captions = viewer.querySelectorAll(".compare-caption");
+    const badge = viewer.querySelector(".compare-badge");
+    const prevBtn = viewer.querySelector('[data-dir="prev"]');
+    const nextBtn = viewer.querySelector('[data-dir="next"]');
+    const stage = viewer.querySelector(".compare-stage");
+
+    const total = slides.length;
+    if (total <= 1) return;
+
+    let currentIndex = 0;
+
+    const labels = ["Self-weight", "With 1 kN load"];
+
+    function setIndex(index) {
+      currentIndex = (index + total) % total;
+
+      tabs.forEach((tab, i) => {
+        const isActive = i === currentIndex;
+        tab.classList.toggle("active", isActive);
+        tab.setAttribute("aria-selected", isActive ? "true" : "false");
+      });
+
+      slides.forEach((slide, i) => {
+        slide.classList.toggle("active", i === currentIndex);
+      });
+
+      captions.forEach((cap, i) => {
+        cap.classList.toggle("active", i === currentIndex);
+      });
+
+      if (badge && labels[currentIndex]) {
+        badge.textContent = labels[currentIndex];
+      }
+    }
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const idx = parseInt(tab.dataset.index, 10);
+        if (!isNaN(idx)) setIndex(idx);
+      });
+    });
+
+    if (prevBtn) {
+      prevBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        setIndex(currentIndex - 1);
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        setIndex(currentIndex + 1);
+      });
+    }
+
+    if (stage) {
+      stage.addEventListener("click", () => {
+        setIndex(currentIndex + 1);
+      });
+
+      stage.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowLeft") {
+          e.preventDefault();
+          setIndex(currentIndex - 1);
+        } else if (e.key === "ArrowRight" || e.key === " " || e.key === "Enter") {
+          e.preventDefault();
+          setIndex(currentIndex + 1);
+        }
+      });
+    }
+  });
+}
+
 
 /**
  * 背景預載入。<link rel="prefetch"> 一個就夠了——

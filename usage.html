@@ -204,32 +204,44 @@
           <code>/br load &lt;fx&gt; &lt;fy&gt; &lt;fz&gt;</code>.
         </p>
 
-        <p>
-          Here is the same steel column before and after. First, carrying nothing but its own weight:
-        </p>
+        <div class="compare-viewer" id="column-load-compare">
+          <div class="compare-toolbar">
+            <div class="compare-tabs" role="tablist" aria-label="Load state comparison">
+              <button class="compare-tab active" role="tab" aria-selected="true" data-index="0">Self-weight (unloaded)</button>
+              <button class="compare-tab" role="tab" aria-selected="false" data-index="1">With test load (/br load 1 1 1)</button>
+            </div>
+            <div class="compare-nav" aria-label="Switch comparison views">
+              <button class="compare-nav-btn" data-dir="prev" aria-label="Previous view" title="Previous view">◀</button>
+              <button class="compare-nav-btn" data-dir="next" aria-label="Next view" title="Next view">▶</button>
+            </div>
+          </div>
 
-        <figure class="shot">
-          <img src="img/column-selfweight.webp" width="1600" height="834" loading="lazy" decoding="async"
-            alt="A tall steel column under self-weight: max D/C 0.004, one member, and a section readout showing top and bottom both in compression at 1.46 MPa">
-          <figcaption>
-            <code>max D/C 0.004</code>, full scale <code>&plusmn;1.46 MPa</code>. Look at the section readout: top
-            <strong>and</strong> bottom are both <code>COMPRESSION −1.46 MPa</code> — the same number twice. That is
-            what pure axial load looks like. No bending, so no neutral axis anywhere in the section.
-          </figcaption>
-        </figure>
+          <div class="compare-stage" tabindex="0" role="region" aria-label="Click to toggle comparison">
+            <div class="compare-slide active" data-index="0">
+              <img src="img/column-selfweight.webp" width="1600" height="834" loading="lazy" decoding="async"
+                alt="A tall steel column under self-weight: max D/C 0.004, one member, and a section readout showing top and bottom both in compression at 1.46 MPa">
+            </div>
+            <div class="compare-slide" data-index="1">
+              <img src="img/column-loaded.webp" width="1600" height="834" loading="lazy" decoding="async"
+                alt="The same column with a 1 kN test load on each axis: max D/C 0.030, two members, contour full scale 10.45 MPa, and the utilisation legend">
+            </div>
+            <span class="compare-badge" id="compare-badge">Self-weight</span>
+          </div>
 
-        <p>Then with <code>/br load 1 1 1</code> on the top block — 1 kN along each axis, so partly sideways:</p>
-
-        <figure class="shot">
-          <img src="img/column-loaded.webp" width="1600" height="834" loading="lazy" decoding="async"
-            alt="The same column with a 1 kN test load on each axis: max D/C 0.030, two members, contour full scale 10.45 MPa, and the utilisation legend">
-          <figcaption>
-            <code>max D/C 0.030</code> and full scale <code>&plusmn;10.45 MPa</code> — demand and contour range both up
-            about sevenfold, from a load far smaller than the column's own weight. The sideways components are doing
-            it: they bend the column, and bending stress does not care how small the force was, only how long the lever
-            arm is.
-          </figcaption>
-        </figure>
+          <div class="compare-captions">
+            <p class="compare-caption active" data-index="0">
+              <code>max D/C 0.004</code>, full scale <code>&plusmn;1.46 MPa</code>. Look at the section readout: top
+              <strong>and</strong> bottom are both <code>COMPRESSION −1.46 MPa</code> — the same number twice. That is
+              what pure axial load looks like. No bending, so no neutral axis anywhere in the section.
+            </p>
+            <p class="compare-caption" data-index="1">
+              <code>max D/C 0.030</code> and full scale <code>&plusmn;10.45 MPa</code> — demand and contour range both up
+              about sevenfold, from a load far smaller than the column's own weight. The sideways components are doing
+              it: they bend the column, and bending stress does not care how small the force was, only how long the lever
+              arm is.
+            </p>
+          </div>
+        </div>
 
         <div class="callout">
           <p>

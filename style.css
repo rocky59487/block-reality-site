@@ -817,6 +817,148 @@ kbd {
   display: block;
 }
 
+/* ---------- 互動載重比較器 (Interactive Compare Viewer) ---------- */
+
+.compare-viewer {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  margin-block: 1.5rem;
+  overflow: hidden;
+}
+
+.compare-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.85rem;
+  background: rgba(0, 0, 0, 0.35);
+  border-bottom: 1px solid var(--line);
+}
+
+.compare-tabs {
+  display: inline-flex;
+  gap: 0.3rem;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.2rem;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.compare-tab {
+  background: transparent;
+  color: var(--muted);
+  border: none;
+  padding: 0.35rem 0.85rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  user-select: none;
+}
+
+.compare-tab:hover {
+  color: var(--text);
+}
+
+.compare-tab.active {
+  background: var(--line);
+  color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.compare-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.compare-nav-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  transition: all 0.18s ease;
+  user-select: none;
+}
+
+.compare-nav-btn:hover {
+  color: var(--text);
+  background: var(--line);
+}
+
+.compare-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1600 / 834;
+  background: #0e1113;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.compare-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease;
+}
+
+.compare-slide.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.compare-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.compare-badge {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 0.75rem;
+  background: rgba(14, 17, 19, 0.8);
+  backdrop-filter: blur(4px);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+  pointer-events: none;
+  font-weight: 500;
+}
+
+.compare-captions {
+  padding: 0.9rem 1.25rem;
+  border-top: 1px solid var(--line);
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.compare-caption {
+  display: none;
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.compare-caption.active {
+  display: block;
+}
+
+
 
 /* ---------- 可收合 FAQ ---------- */
 
